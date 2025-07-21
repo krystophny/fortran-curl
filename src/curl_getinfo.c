@@ -10,11 +10,9 @@
 
 /* Wrapper for getting long values (including HTTP response code) */
 int curl_easy_getinfo_long_wrapper(void *curl, int info, long *value) {
+    if (curl == NULL || value == NULL) {
+        return CURLE_BAD_FUNCTION_ARGUMENT;
+    }
     return (int)curl_easy_getinfo((CURL *)curl, (CURLINFO)info, value);
 }
 
-/* Wrapper for getting integer values */
-int curl_easy_getinfo_int_wrapper(void *curl, int info, long *value) {
-    /* curl_easy_getinfo always expects a long pointer for numeric values */
-    return (int)curl_easy_getinfo((CURL *)curl, (CURLINFO)info, value);
-}
